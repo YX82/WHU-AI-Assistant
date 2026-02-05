@@ -1,43 +1,35 @@
 import json
-import gradio as gr
-from openai import OpenAI
-
-client = OpenAI(api_key="你的API_KEY")
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 # 读取知识库
 with open("knowledge.json", "r", encoding="utf-8") as f:
     knowledge = json.load(f)
 
-# 简单关键词检索
-def search_knowledge(question):
-    results = []
-    for item in knowledge:
-        if any(word in item["content"] for word in question):
-            results.append(item["content"])
-    return "\n".join(results[:3])
+documents = [item["title"] + " " + item["content"] for item in knowledge]
+
+# 建立向量模型（把文本变成“数学向量”）
+vectorizer = TfidfVectorizer()
+doc_vectors = vectorizer.fit_transform(documents)
 
 def answer_question(question):
-    context = search_knowledge(question)
+    question_vec = vectorizer.transform([question])
+    similarities = cosine_similarity(question_vec, doc_vectors)[0]
+    best_match_index = similarities.argmax()
+    best_score = similarities[best_match_index]
 
-    prompt = f"""
-你是武汉大学校园智能助手，请根据提供的校园资料回答问题。
+    if best_score < 0.1:
+        return "抱歉，知识库中暂时没有找到相关信息。"
 
-资料：
-{context}
+    best_item = knowledge[best_match_index]
+    return f"【{best_item['title']}】\n{best_item['content']}"
 
-问题：{question}
-"""
+print("🎓 武汉大学校园智能问答助手（智能检索版）已启动！输入 q 退出\n")
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[{"role": "user", "content": prompt}]
-    )
+while True:
+    q = input("请输入你的问题：")
+    if q.lower() == "q":
+        break
 
-    return response.choices[0].message.content
-
-demo = gr.Interface(fn=answer_question,
-                    inputs="text",
-                    outputs="text",
-                    title="武大校园智能问答助手")
-
-demo.launch()
+    ans = answer_question(q)
+    print("\n🤖 回答：\n", ans, "\n")
