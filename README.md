@@ -31,3 +31,35 @@ User Question → Knowledge Base Retrieval → LLM Generation → Answer Output
 
 ## 📂 Project Structure
 
+WHU-AI-Assistant
+│── app.py # Main application (Gradio + LLM interaction)
+│── knowledge.json # Structured campus knowledge base
+│── data_processor.py # Data cleaning and structured extraction module
+│── requirements.txt # Project dependencies
+└── README.md # Project documentation
+
+
+---
+
+## 🛠 Installation & Usage
+
+### 1️⃣ Clone the repository
+
+```bash
+git clone https://github.com/YX82/WHU-AI-Assistant.git
+cd WHU-AI-Assistant
+```
+
+### 2️⃣ Install dependencies
+
+pip install -r requirements.txt
+
+### 3️⃣ Add your API Key
+
+client = OpenAI(api_key="YOUR_API_KEY")
+
+### 4️⃣ Run the application'
+
+python app.py
+
+
