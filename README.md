@@ -1,65 +1,66 @@
-# WHU-AI-Assistant
-An AI campus assistant for Wuhan University providing intelligent information retrieval and Q&amp;A services
+# 🎓 WHU-AI-Assistant  
+An Intelligent Campus Q&A System for Wuhan University
 
-This project was built for the **Wuhan University "Volcano Cup" AI Agent Innovation Competition**.
+This project was developed for the **Wuhan University "Volcano Cup" AI Agent Innovation Competition**.  
+It provides an AI-powered question answering system based on official university website data.
 
 ---
 
 ## 🚀 Project Overview
 
-This system provides intelligent Q&A services for campus-related information, including:
+WHU-AI-Assistant is an intelligent campus information assistant that can answer questions about:
 
-- Academic affairs guidance
-- Campus life services
-- University news and announcements
-- Freshman onboarding support
+- University introduction and history  
+- Academic affairs and departments  
+- Library services  
+- Student affairs and campus services  
+- Admissions and employment information  
 
-It is based on a **Retrieval-Augmented Generation (RAG)** workflow:
-
-User Question → Knowledge Base Retrieval → LLM Generation → Answer Output
+Unlike traditional chatbots, this system does **not rely on fixed Q&A pairs**.  
+Instead, it retrieves relevant content from a **real knowledge base built from official WHU websites**.
 
 ---
 
 ## 🧠 System Architecture
 
-1. User inputs a campus-related question  
-2. The system searches a structured knowledge base  
-3. Relevant information is injected into a prompt  
-4. Large Language Model generates a natural language answer  
+The system follows a lightweight **Retrieval-Based QA pipeline**:
+
+User Question  
+→ Text Vectorization (TF-IDF)  
+→ Similarity Matching  
+→ Retrieve Most Relevant Document  
+→ Return Answer  
 
 ---
 
-## 📂 Project Structure
+## 📚 Knowledge Base Construction
 
-WHU-AI-Assistant
-│── app.py # Main application (Gradio + LLM interaction)
-│── knowledge.json # Structured campus knowledge base
-│── data_processor.py # Data cleaning and structured extraction module
-│── requirements.txt # Project dependencies
-└── README.md # Project documentation
+To ensure authoritative and up-to-date information, the knowledge base is built from **official Wuhan University websites** using automated web crawling.
 
+### 🔍 Data Sources
 
----
+The system collects data from multiple university portals, including:
 
-## 🛠 Installation & Usage
+- Wuhan University official website  
+- Undergraduate Affairs Office  
+- Graduate School  
+- Library  
+- Student Affairs Office  
+- Career Services  
+- Admissions websites  
+- Administrative departments
 
-### 1️⃣ Clone the repository
+### 🤖 Web Crawling Method
+
+A browser automation crawler based on **Selenium** is used to:
+
+1. Load dynamic web pages rendered by JavaScript  
+2. Extract visible textual content  
+3. Clean and store structured knowledge entries  
+
+This avoids common issues where traditional crawlers fail to retrieve content from modern university portals.
+
+Run the crawler with:
 
 ```bash
-git clone https://github.com/YX82/WHU-AI-Assistant.git
-cd WHU-AI-Assistant
-```
-
-### 2️⃣ Install dependencies
-
-pip install -r requirements.txt
-
-### 3️⃣ Add your API Key
-
-client = OpenAI(api_key="YOUR_API_KEY")
-
-### 4️⃣ Run the application'
-
-python app.py
-
-
+python build_knowledge.py
