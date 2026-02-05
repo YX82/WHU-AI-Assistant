@@ -64,3 +64,9 @@ Run the crawler with:
 
 ```bash
 python build_knowledge.py
+```
+
+
+### examples:
+![Uploading 1edb6dbde5712782fe791ad42311774b.png…]()
+
