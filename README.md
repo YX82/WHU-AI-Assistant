@@ -68,5 +68,6 @@ python build_knowledge.py
 
 
 ### examples:
-![Uploading 1edb6dbde5712782fe791ad42311774b.png…]()
+![System Demo](images/example1.png)
+![System Demo](images/example2.png)
 
