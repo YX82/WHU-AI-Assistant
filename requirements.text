@@ -1,4 +1,0 @@
-openai
-gradio
-安装依赖：pip install openai gradio
-运行：    python app.py
